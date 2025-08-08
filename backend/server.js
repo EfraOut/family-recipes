@@ -1,12 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const recipesRoutes = require('./routes/recipeRoutes')
+const recipesRoutes = require('./routes/recipeRoutes');
+const cors = require('cors');
 
 // Load environment variables
 dotenv.config();
-
 const app = express();
+
+app.use(cors({origin: 'http://localhost:3000', credentials: false}));
 
 // Middleware to parse JSON requests
 app.use(express.json());

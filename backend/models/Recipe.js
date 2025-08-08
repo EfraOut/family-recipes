@@ -6,20 +6,19 @@ const recipeSchema = new mongoose.Schema({
     required: true,
   },
   category: {
-    type: String, // e.g., "Breakfast", "Lunch", "Dessert"
+    type: String,
     required: true,
   },
   prepTime: {
-    type: Number, // minutes
+    type: Number,
     required: true,
   },
   cookTime: {
-    type: Number, // minutes
+    type: Number,
     required: true,
   },
   totalTime: {
     type: Number,
-    required: true,
   },
   ingredients: {
     type: [String],
@@ -35,6 +34,12 @@ const recipeSchema = new mongoose.Schema({
   }
 }, {
   timestamps: true
+});
+
+// Auto-calculate totalTime before saving
+recipeSchema.pre('save', function(next) {
+  this.totalTime = this.prepTime + this.cookTime;
+  next();
 });
 
 module.exports = mongoose.model('Recipe', recipeSchema);
