@@ -9,13 +9,13 @@ const allowed = [
   'http://localhost:3000',
   process.env.FRONTEND_ORIGIN
 ];
-app.use(cors({ origin: (o, cb) => cb(null, !o || allowed.includes(o)), credentials: false }));
 
 // Load environment variables
 dotenv.config();
 const app = express();
 
 app.use(cors({origin: 'http://localhost:3000', credentials: false}));
+app.use(cors({ origin: (o, cb) => cb(null, !o || allowed.includes(o)), credentials: false }));
 
 // Middleware to parse JSON requests
 app.use(express.json());
