@@ -42,7 +42,7 @@ export default function EditRecipe() {
     <form onSubmit={onSubmit} style={{ display: 'grid', gap: 8 }}>
       <input placeholder="Name" value={form.name} onChange={set('name')} required />
       <select value={form.category} onChange={set('category')} required>
-        <option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Dessert</option><option>Snack</option>
+        <option>Desayunos</option><option>Platos Fuertes</option><option>Sopas</option><option>Acompañamientos</option><option>Postres</option>
       </select>
       <input type="number" min="0" placeholder="Prep time (min)" value={form.prepTime} onChange={set('prepTime')} required />
       <input type="number" min="0" placeholder="Cook time (min)" value={form.cookTime} onChange={set('cookTime')} required />

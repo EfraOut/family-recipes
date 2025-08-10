@@ -4,6 +4,13 @@ const dotenv = require('dotenv');
 const recipesRoutes = require('./routes/recipeRoutes');
 const cors = require('cors');
 
+// Allowed frontends
+const allowed = [
+  'http://localhost:3000',
+  process.env.FRONTEND_ORIGIN
+];
+app.use(cors({ origin: (o, cb) => cb(null, !o || allowed.includes(o)), credentials: false }));
+
 // Load environment variables
 dotenv.config();
 const app = express();
@@ -26,6 +33,9 @@ const connectDB = async () => {
 
 
 const PORT = process.env.PORT || 5000;
+
+// Making the app Render-friendly
+app.get('/healthz', (_, res) => res.status(200).json({ ok: true }));
 
 app.listen(PORT, () => {
   connectDB();
