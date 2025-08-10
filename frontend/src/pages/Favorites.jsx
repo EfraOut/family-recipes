@@ -12,8 +12,10 @@ export default function Favorites() {
     return () => { mounted = false; };
   }, []);
 
-  const favSet = new Set(getFavorites());
-  const favs = useMemo(() => recipes.filter(r => favSet.has(r._id)), [recipes]);
+  const favs = useMemo(() => {
+    const favSet = new Set(getFavorites());
+    recipes.filter(r => favSet.has(r._id));
+  }, [recipes]);
 
   return (
     <div style={{ display: 'grid', gap: 12 }}>
