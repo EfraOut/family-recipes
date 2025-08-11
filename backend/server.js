@@ -27,8 +27,6 @@ const corsOptions = {
 dotenv.config();
 const app = express();
 
-app.use(cors({origin: ['http://localhost:3000', process.env.FRONTEND_ORIGIN], credentials: false}));
-app.use(cors({ origin: (o, cb) => cb(null, !o || allowed.includes(o)), credentials: false }));
 app.use(cors(corsOptions));
 
 // Middleware to parse JSON requests
