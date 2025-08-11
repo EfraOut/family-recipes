@@ -5,17 +5,31 @@ const recipesRoutes = require('./routes/recipeRoutes');
 const cors = require('cors');
 
 // Allowed frontends
-const allowed = [
+const allowedOrigins = [
   'http://localhost:3000',
-  process.env.FRONTEND_ORIGIN
+  process.env.FRONTEND_ORIGIN,
 ];
+
+// If you also want to allow Netlify preview/branch deploys, use a function:
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin) return callback(null, true); // allow tools/curl
+    if (allowedOrigins.includes(origin) || /\.netlify\.app$/.test(new URL(origin).host)) {
+      return callback(null, true);
+    }
+    return callback(new Error(`Not allowed by CORS: ${origin}`));
+  },
+  credentials: false,
+};
+
 
 // Load environment variables
 dotenv.config();
 const app = express();
 
-app.use(cors({origin: 'http://localhost:3000', credentials: false}));
+app.use(cors({origin: ['http://localhost:3000', process.env.FRONTEND_ORIGIN], credentials: false}));
 app.use(cors({ origin: (o, cb) => cb(null, !o || allowed.includes(o)), credentials: false }));
+app.use(cors(corsOptions));
 
 // Middleware to parse JSON requests
 app.use(express.json());
